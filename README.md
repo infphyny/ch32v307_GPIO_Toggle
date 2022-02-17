@@ -23,7 +23,7 @@ At the end of .bashrc file add
 export PATH=/opt/riscv/bin:$PATH
 ```
 
-In this repository type 
+In src folder
 ```
 make 
 ```
