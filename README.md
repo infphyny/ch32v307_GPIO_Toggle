@@ -1,3 +1,6 @@
+
+Work in progress. Not receiving my board yet and feedback say it doesn't work, led are not blinking.
+
 # GPIO_Toggle example for CH32V307V-EVT-R1
 
 This example is taken from https://github.com/openwch/ch32v307 repository.
@@ -32,7 +35,7 @@ to compile GPIO_Toggle.bin file.
 
 ## Remark
 
-* ARCH in the makefile is set to rv32imafc. ABI is set to ilp32f.  May need modification
+* ARCH in the makefile is set to rv32imafc. ABI is set to ilp32f. May need modification. After analysing the 8 uarts demo application, CH32V307 add a custom instruction sets: xw and arch is rv32imacxw. I didn't found any documentation yet for this instructions. Instructions are defined in the file riscv-op. in binutils. 
 
 * Compile optimization is set to -Os.
 

@@ -10,11 +10,13 @@
 
 /*
  *@Note
- GPIOÀý³Ì£º
- PA0ÍÆÍìÊä³ö¡£
+ GPIOï¿½ï¿½ï¿½Ì£ï¿½
+ PA0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 */
 
+#include <stdio.h>
+#include <stdlib.h>
 #include "debug.h"
 
 /* Global define */
