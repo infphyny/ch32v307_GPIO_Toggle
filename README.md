@@ -70,7 +70,7 @@ Execute in MRS_Toolchain_Linux_x64_V1.30/OpenOCD/bin
 
 ```
 
-For convenience copy GPIO_Toggle.bin in MRS_Toolchain_Linux_x64_V1.30OpenOCD/bin.
+For convenience copy GPIO_Toggle.bin in MRS_Toolchain_Linux_x64_V1.30/OpenOCD/bin.
 
 In the same directory, open another terminal and execute
 
