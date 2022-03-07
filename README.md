@@ -15,7 +15,7 @@ Plug a male to female wire from PA0 to LED1.
 
 * Setup udev rules
 
-Create a 98-ch549.rules in directory /etc/udev/rules.d/
+Create a file named 98-ch549.rules in directory /etc/udev/rules.d/
 
 Inside the file write:
 ```
