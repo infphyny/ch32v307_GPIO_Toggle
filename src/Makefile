@@ -9,7 +9,7 @@ ABI  := ilp32f
 #ABI  := ilp32#
 
 PROJECT_NAME := GPIO_Toggle
-OPT := -O3
+OPT := -Os
 OBJ := startup_ch32v30x_D8C.o system_ch32v30x.o ch32v30x_adc.o ch32v30x_bkp.o \
  ch32v30x_can.o ch32v30x_crc.o ch32v30x_dac.o ch32v30x_dbgmcu.o ch32v30x_dma.o \
  ch32v30x_dvp.o ch32v30x_eth.o ch32v30x_exti.o ch32v30x_flash.o ch32v30x_fsmc.o \
@@ -25,11 +25,11 @@ LDFLAGS += --print-memory-usage
 all: $(PROJECT_NAME).elf $(PROJECT_NAME).bin $(PROJECT_NAME).lst
 
 %.o:%.S
-	$(CC)  -mabi=$(ABI)  $(OPT) -march=$(ARCH) -nostartfiles -msmall-data-limit=8 -msave-restore -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -w -x assembler -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -c -o $@  $<
+	$(CC)  $(OPT) -mabi=$(ABI)   -march=$(ARCH) -nostartfiles -msmall-data-limit=8 -msave-restore -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -w -x assembler -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -c -o $@  $<
 
 
 %.o:%.c  Makefile
-	$(CC)  $(INCLUDE_DIRECTORIES) -std=gnu99  -mabi=$(ABI)  $(OPT) -march=$(ARCH) -nostartfiles  -msmall-data-limit=8 -msave-restore -Os -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -w -Xlinker --gc-sections   -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -c  -o $@  $<
+	$(CC)  $(OPT) $(INCLUDE_DIRECTORIES) -std=gnu99  -mabi=$(ABI)  -march=$(ARCH) -nostartfiles  -msmall-data-limit=8 -msave-restore -Os -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -w -Xlinker --gc-sections   -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -c  -o $@  $<
 
 $(PROJECT_NAME).lst : $(PROJECT_NAME).elf
 	@ $(OBJDUMP) --source --all-headers --demangle --line-numbers --wide  $< > $@
