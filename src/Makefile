@@ -3,10 +3,10 @@ AS := $(TOOLCHAIN_PREFIX)as
 CC := $(TOOLCHAIN_PREFIX)gcc
 OBJCOPY := $(TOOLCHAIN_PREFIX)objcopy
 OBJDUMP := $(TOOLCHAIN_PREFIX)objdump
-#ARCH := rv32imafc
-#ABI  := ilp32f
-ARCH := rv32imac#xw1p0#
-ABI  := ilp32#
+ARCH := rv32imafc
+ABI  := ilp32f
+#ARCH := rv32ima#c#xw1p0#
+#ABI  := ilp32#
 
 PROJECT_NAME := GPIO_Toggle
 OPT := -O3
