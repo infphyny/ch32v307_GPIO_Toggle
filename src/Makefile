@@ -40,7 +40,7 @@ $(PROJECT_NAME).bin : $(PROJECT_NAME).elf
 		@ @
 
 $(PROJECT_NAME).elf : $(OBJ)
-	$(CC) $(INCLUDES_DIRECTORIES)  -L /home/stche/tools/WCH/MounRiver_Studio_Community_Linux_x64_V100/MRS_Community/toolchain/RISC-V\ Embedded\ GCC/lib/gcc/lib/rv32imac/ilp32/ -std=gnu99 -mabi=$(ABI)  $(OPT) -march=$(ARCH) -nostartfiles -msmall-data-limit=8 -msave-restore -Os -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -w -Xlinker --gc-sections  -Wl,-Map,$(PROJECT_NAME).map,$(LDFLAGS) --specs=nano.specs --specs=nosys.specs  -T  Link.ld  -o $@  $^
+	$(CC) $(INCLUDES_DIRECTORIES)   -std=gnu99 -mabi=$(ABI)  $(OPT) -march=$(ARCH) -nostartfiles -msmall-data-limit=8 -msave-restore -Os -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -w -Xlinker --gc-sections  -Wl,-Map,$(PROJECT_NAME).map,$(LDFLAGS) --specs=nano.specs --specs=nosys.specs  -T  Link.ld  -o $@  $^
 
 
 

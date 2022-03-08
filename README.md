@@ -88,7 +88,7 @@ after type
 ```
 flash write_image erase GPIO_Toggle.bin 0x08000000
 ```
-Toggle S3 switch on-off-on to execute the binary.
+Press reset button to execute the binary.
 
 
 
