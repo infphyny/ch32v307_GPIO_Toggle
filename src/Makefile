@@ -10,13 +10,9 @@ ABI  := ilp32f
 
 PROJECT_NAME := GPIO_Toggle
 OPT := -Os
-OBJ := startup_ch32v30x_D8C.o system_ch32v30x.o ch32v30x_adc.o ch32v30x_bkp.o \
- ch32v30x_can.o ch32v30x_crc.o ch32v30x_dac.o ch32v30x_dbgmcu.o ch32v30x_dma.o \
- ch32v30x_dvp.o ch32v30x_eth.o ch32v30x_exti.o ch32v30x_flash.o ch32v30x_fsmc.o \
- ch32v30x_gpio.o ch32v30x_i2c.o ch32v30x_iwdg.o ch32v30x_opa.o ch32v30x_pwr.o \
- ch32v30x_rcc.o ch32v30x_rng.o ch32v30x_rtc.o ch32v30x_sdio.o ch32v30x_spi.o \
- ch32v30x_tim.o  ch32v30x_usart.o ch32v30x_wwdg.o  \
- core_riscv.o ch32v30x_misc.o debug.o ch32v30x_it.o syscalls.o main.o
+
+OBJ=startup_ch32v30x_D8C.o $(patsubst %.c,%.o,$(wildcard *.c))
+
 LDFLAGS += --print-memory-usage
 
 #%.o:%.S
@@ -24,12 +20,14 @@ LDFLAGS += --print-memory-usage
 
 all: $(PROJECT_NAME).elf $(PROJECT_NAME).bin $(PROJECT_NAME).lst
 
+-include *.d
+
 %.o:%.S
-	$(CC)  $(OPT) -mabi=$(ABI)   -march=$(ARCH) -nostartfiles -msmall-data-limit=8 -msave-restore -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -w -x assembler -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -c -o $@  $<
+	$(CC) $(OPT) -mabi=$(ABI)   -march=$(ARCH) -nostartfiles -msmall-data-limit=8 -msave-restore -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -w -x assembler -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -c -o $@  $<
 
 
 %.o:%.c  Makefile
-	$(CC)  $(OPT) $(INCLUDE_DIRECTORIES) -std=gnu99  -mabi=$(ABI)  -march=$(ARCH) -nostartfiles  -msmall-data-limit=8 -msave-restore -Os -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -w -Xlinker --gc-sections   -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -c  -o $@  $<
+	$(CC) $(OPT) $(INCLUDE_DIRECTORIES) -std=gnu99  -mabi=$(ABI)  -march=$(ARCH) -nostartfiles  -msmall-data-limit=8 -msave-restore -Os -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -w -Xlinker --gc-sections   -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -c  -o $@  $<
 
 $(PROJECT_NAME).lst : $(PROJECT_NAME).elf
 	@ $(OBJDUMP) --source --all-headers --demangle --line-numbers --wide  $< > $@
@@ -39,8 +37,8 @@ $(PROJECT_NAME).bin : $(PROJECT_NAME).elf
 		@ 	$(OBJCOPY) -O ihex $< $(PROJECT_NAME).hex
 		@ @
 
-$(PROJECT_NAME).elf : $(OBJ)
-	$(CC) $(INCLUDES_DIRECTORIES)   -std=gnu99 -mabi=$(ABI)  $(OPT) -march=$(ARCH) -nostartfiles -msmall-data-limit=8 -msave-restore -Os -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -w -Xlinker --gc-sections  -Wl,-Map,$(PROJECT_NAME).map,$(LDFLAGS) --specs=nano.specs --specs=nosys.specs  -T  Link.ld  -o $@  $^
+$(PROJECT_NAME).elf : $(OBJ) Link.ld
+	$(CC) -std=gnu99 -mabi=$(ABI)  $(OPT) -march=$(ARCH) -nostartfiles -msmall-data-limit=8 -msave-restore -Os -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -w -Xlinker --gc-sections  -Wl,-Map,$(PROJECT_NAME).map,$(LDFLAGS) --specs=nano.specs --specs=nosys.specs  -T  Link.ld  -o $@  $(OBJ)
 
 
 
