@@ -38,7 +38,7 @@ $(PROJECT_NAME).bin : $(PROJECT_NAME).elf
 		@ @
 
 $(PROJECT_NAME).elf : $(OBJ) Link.ld
-	$(CC) -std=gnu99 -mabi=$(ABI)  $(OPT) -march=$(ARCH) -nostartfiles -msmall-data-limit=8 -msave-restore -Os -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -w -Xlinker --gc-sections  -Wl,-Map,$(PROJECT_NAME).map,$(LDFLAGS) --specs=nano.specs --specs=nosys.specs  -T  Link.ld  -o $@  $^
+	$(CC) -std=gnu99 -mabi=$(ABI)  $(OPT) -march=$(ARCH) -nostartfiles -msmall-data-limit=8 -msave-restore -Os -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -w -Xlinker --gc-sections  -Wl,-Map,$(PROJECT_NAME).map,$(LDFLAGS) --specs=nano.specs --specs=nosys.specs  -T  Link.ld  -o $@  $(OBJ)
 
 
 
